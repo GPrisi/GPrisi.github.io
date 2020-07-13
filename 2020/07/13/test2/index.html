@@ -211,14 +211,14 @@
 <p><code>#include &quot;xx.h&quot;</code> 是一种声明集合，但一次编译所有（包括不需要的），很耗时<br>这时在顶部用<strong>前向声明</strong>可以缩短编译时间</p>
 <h2 id="场景二"><a href="#场景二" class="headerlink" title="场景二"></a>场景二</h2><p>两个定义互相调用，打破循环</p>
 <pre><code class="hljs dts"><span class="hljs-comment">//car.h</span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> “wheel.h”</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">"wheel.h"</span></span>
 Car&#123;
     Wheel wh1;
 &#125;</code></pre>
 
 
 <pre><code class="hljs cpp"><span class="hljs-comment">//wheel.h</span>
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span>;</span><span class="hljs-comment">//**前向声明**</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span>;</span>	<span class="hljs-comment">//前向声明</span>
 Wheel&#123;
     Car  car1;
 &#125;</code></pre>
