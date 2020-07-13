@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>ipad markdown文件测试</title>
+    <link href="/2020/07/13/test2/"/>
+    <url>/2020/07/13/test2/</url>
+    
+    <content type="html"><![CDATA[<h1 id="c-前向声明"><a href="#c-前向声明" class="headerlink" title="c++前向声明"></a>c++前向声明</h1><h2 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h2><blockquote><p>C++在调用任何函数之前，必须先看到声明</p></blockquote><p><code>#include &quot;xx.h&quot;</code> 是一种声明集合，但一次编译所有（包括不需要的），很耗时<br>这时在顶部用<strong>前向声明</strong>可以缩短编译时间</p><h2 id="场景二"><a href="#场景二" class="headerlink" title="场景二"></a>场景二</h2><p>两个定义互相调用，打破循环</p><pre><code class="hljs actionscript"><span class="hljs-comment">//car.h</span><span class="hljs-meta"><span class="hljs-meta-keyword">include</span> “wheel.h”</span><span class="hljs-meta">Car&#123;</span><span class="hljs-meta">    Wheel wh1;</span>&#125;</code></pre><pre><code class="hljs cpp"><span class="hljs-comment">//wheel.h</span><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span>;</span><span class="hljs-comment">//**前向声明**</span>Wheel&#123;    Car  car1;&#125;</code></pre><hr><h1 id="用递归还是循环"><a href="#用递归还是循环" class="headerlink" title="用递归还是循环"></a>用递归还是循环</h1><blockquote><p>递归是在一个函数的内部调用这个函数自身</p></blockquote><h2 id="递归的优点"><a href="#递归的优点" class="headerlink" title="递归的优点"></a>递归的优点</h2><p>通常代码更简洁，容易实现</p><h2 id="递归的缺点"><a href="#递归的缺点" class="headerlink" title="递归的缺点"></a>递归的缺点</h2><ul><li>函数调用造成时间和空间的消耗</li></ul><blockquote><p>每次函数调用，要在内存栈分配空间保存：参数，返回地址，临时变量</p></blockquote><blockquote><p>压栈和弹出栈都要消耗时间</p></blockquote><ul><li><p>可能存在很多重复计算</p><p>  如：斐波那契数列的计算<br>  用自上而下的循环更有效率</p></li></ul><ul><li><p><em>（基于上两个）调用栈溢出</em></p><p>  如果递归调用的层级太多，就会超出栈的容量</p></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>test</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>test</title>
     <link href="/2020/07/11/test/"/>
     <url>/2020/07/11/test/</url>
