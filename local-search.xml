@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>logisticRegression</title>
+    <link href="/2020/08/04/logisticRegression/"/>
+    <url>/2020/08/04/logisticRegression/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Logistic-Regression-逻辑回归"><a href="#Logistic-Regression-逻辑回归" class="headerlink" title="Logistic Regression 逻辑回归"></a>Logistic Regression 逻辑回归</h1><h2 id="命名与内涵"><a href="#命名与内涵" class="headerlink" title="命名与内涵"></a>命名与内涵</h2><ul><li><p><strong>“逻辑”有点像电路里“逻辑门”的概念</strong></p><p>输入不同的电平高低，根据逻辑门本身的电路设置（与或非门）决定了输出，且输出只有0/1（针对二元分类）。</p><p><img src="/home/lsp/%E5%9B%BE%E7%89%87/andor.jpg" srcset="/img/loading.gif" alt=""></p><p>电平就相当于数据，与或非门相当于 $w$ 和 $b$ 。</p></li><li><p><strong>虽然名字里有“回归”，但并不指向回归问题，而是基本上用于分类问题</strong></p><p> 回归和分类其实不是对立的概念，<strong>“回归”</strong>是对数据的处理方式，而<strong>“分类”</strong>只是指最后要达成的效果。回归的最终目的可以是为了拟合数据，也可以是为了分类。也可理解为，有时候回归是用于找出分类边界。</p><ul><li>我理解LR的“回归”主要体现在它不是单纯的二元分类，而是用回归的方法预测出近似概率值的基础上进行分类；</li></ul></li></ul><p>##　总体目标</p><p>线性回归模型是$y=w^ Tx+b$，即寻求合适的 $w$ 和 $b$ 来逼近 $y$<br>而Logistic回归模型要逼近的是$\ln {\frac{y}{1-y}}$ :<br>$$<br>\ln\frac{ y}{1-y}=w^Tx+b<br>$$</p><blockquote><p>$\frac{y}{1-y}可以看成“正例可能性”/“反例可能性”，又称为“几率”，所以，\ln {\frac{y}{1-y}} 又叫对数几率$，也就是说Logistic回归是要寻求合适的 $w$ 和 $b$ 让对数几率值尽量接近数据 $x$ 的真实分类区间。</p></blockquote><h2 id="进一步细节"><a href="#进一步细节" class="headerlink" title="进一步细节"></a>进一步细节</h2><ul><li><p><strong>函数图像</strong></p><p>Logistic回归模型是广义线性模型: $ y=g^{-1}(w^Tx+b)$ 的一个特例，上式做一下变换就是：$y=\frac{1}{1+e^{-(w^Tx+b)}}$ ，令 $w^Tx+b$ 为 $z$ ，则是一个标准的sigmoid函数（所以sigmoid函数又叫“对数几率函数”）：<br>$$<br>y=\frac{1}{1+e^{-z}}<br>$$<br>sigmoid函数图像如下：</p><p><img src="/home/lsp/%E5%9B%BE%E7%89%87/sigmoid.jpeg" srcset="/img/loading.gif" alt=""></p></li></ul><ul><li><p><strong>函数特点</strong></p><blockquote><p>我们熟知的单位阶跃函数，就是把正负数据映射到0/1值：</p></blockquote><p>$$<br>y=\left{<br>\begin{matrix}<br> 1,  x&gt;0\<br> 0.5,  x=0\<br> 0,  x&lt;0<br>\end{matrix}<br>\right.<br>$$</p><p>同理，sigmoid也是把正/负值的变量 $z$ 映射到 $(0.5,1)$、 $(0,0.5)$  两个区间而代表不同的分类，</p></li><li><p><strong>$w$ 取值对函数图像的影响</strong></p></li></ul><p>  <img src="/home/lsp/%E5%9B%BE%E7%89%87/sigmoidcmpr.png" srcset="/img/loading.gif" alt=""></p><blockquote></blockquote>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ipad markdown文件测试</title>
     <link href="/2020/07/13/test2/"/>
     <url>/2020/07/13/test2/</url>
