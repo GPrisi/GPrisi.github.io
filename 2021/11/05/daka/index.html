@@ -16,15 +16,15 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="目标:完成学校的每日健康打卡任务 打卡流程:每天早上八点打开浏览器、打开学工网、登陆账号、点进打卡页面、选择确认、保存表单、确认打卡成功。  1. 配置云服务器CentOS 7.6 64bit 2. 编写python程序模块安装 安装playwright模块1pip install playwright -i https:&#x2F;&#x2F;pypi.douban.com&#x2F;simple  安装[[chromium">
+  <meta name="description" content="目标:完成学校的每日健康打卡任务 打卡流程:每天早上八点打开浏览器、打开学工网、登陆账号、点进打卡页面、选择确认、保存表单、确认打卡成功。  1. 配置云服务器CentOS 7.6 64bit 2. 编写python程序模块安装 安装playwright模块 Playwright 是微软开源的一个基于 Node.js 的工具库，可使用一个相同的API调用Chromium（Google-Chrome">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我的自动打卡程序">
 <meta property="og:url" content="http://example.com/2021/11/05/daka/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="目标:完成学校的每日健康打卡任务 打卡流程:每天早上八点打开浏览器、打开学工网、登陆账号、点进打卡页面、选择确认、保存表单、确认打卡成功。  1. 配置云服务器CentOS 7.6 64bit 2. 编写python程序模块安装 安装playwright模块1pip install playwright -i https:&#x2F;&#x2F;pypi.douban.com&#x2F;simple  安装[[chromium">
+<meta property="og:description" content="目标:完成学校的每日健康打卡任务 打卡流程:每天早上八点打开浏览器、打开学工网、登陆账号、点进打卡页面、选择确认、保存表单、确认打卡成功。  1. 配置云服务器CentOS 7.6 64bit 2. 编写python程序模块安装 安装playwright模块 Playwright 是微软开源的一个基于 Node.js 的工具库，可使用一个相同的API调用Chromium（Google-Chrome">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-05T10:18:25.904Z">
-<meta property="article:modified_time" content="2021-11-05T10:50:31.447Z">
+<meta property="article:modified_time" content="2021-11-05T10:53:42.895Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -195,7 +195,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      1.5k 字
     </span>
   
 
@@ -204,7 +204,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      5 分钟
     </span>
   
 
@@ -241,10 +241,13 @@
 <hr>
 <h2 id="1-配置云服务器"><a href="#1-配置云服务器" class="headerlink" title="1. 配置云服务器"></a>1. 配置云服务器</h2><p>CentOS 7.6 64bit</p>
 <h2 id="2-编写python程序"><a href="#2-编写python程序" class="headerlink" title="2. 编写python程序"></a>2. 编写python程序</h2><h3 id="模块安装"><a href="#模块安装" class="headerlink" title="模块安装"></a>模块安装</h3><ul>
-<li>安装playwright模块<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">pip install playwright -i https:<span class="hljs-regexp">//</span>pypi.douban.com/simple <br></code></pre></td></tr></table></figure></li>
-<li>安装[[chromium浏览器]]<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">python -m playwright <span class="hljs-keyword">install</span> chromium<br></code></pre></td></tr></table></figure></li>
+<li><p>安装playwright模块</p>
+<p>Playwright 是微软开源的一个基于 Node.js 的工具库，可使用一个相同的API调用Chromium（Google-Chrome、Microsoft-Edge）、WebKit（Apple-Safari）和Mozilla-Firefox浏览器自动执行任务。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">pip install playwright -i https:<span class="hljs-regexp">//</span>pypi.douban.com/simple <br></code></pre></td></tr></table></figure></li>
+<li><p>安装chromium浏览器</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">python -m playwright <span class="hljs-keyword">install</span> chromium<br></code></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>主要就是调用[[playwright]]模块里的API，完成打开网页、点击页面元素和输入信息的整个过程。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>主要就是调用playwright模块里的API，完成打开网页、点击页面元素和输入信息的整个过程。</p>
 <ul>
 <li><p>参考文档<br><a target="_blank" rel="noopener" href="https://pypi.org/project/playwright/">pypi文档：Playwright for Python</a><br><a target="_blank" rel="noopener" href="https://playwright.dev/docs/api/class-page">playwright API文档</a></p>
 </li>
