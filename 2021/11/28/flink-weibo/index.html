@@ -18,7 +18,7 @@
   <meta name="keywords" content="">
   <meta name="description" content="学习使用Flink，对MicroblogPCU数据集进行可视化分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Flink之分析微博垃圾账号的行为">
+<meta property="og:title" content="使用Flink-分析微博spammer账号的行为">
 <meta property="og:url" content="http://example.com/2021/11/28/flink-weibo/index.html">
 <meta property="og:site_name" content="Priscilla&#39;s blog">
 <meta property="og:description" content="学习使用Flink，对MicroblogPCU数据集进行可视化分析">
@@ -28,13 +28,13 @@
 <meta property="og:image" content="http://example.com/img/followee_num.jpg">
 <meta property="og:image" content="http://example.com/img/%E8%AF%8D%E4%BA%91%E5%9B%BE-6.png">
 <meta property="article:published_time" content="2021-11-28T05:01:20.000Z">
-<meta property="article:modified_time" content="2021-11-28T05:22:24.036Z">
+<meta property="article:modified_time" content="2021-11-28T05:28:22.016Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="flink">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/image-20210607203836096.png">
   
-  <title>使用Flink之分析微博垃圾账号的行为 - Priscilla&#39;s blog</title>
+  <title>使用Flink-分析微博spammer账号的行为 - Priscilla&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -184,7 +184,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="使用Flink之分析微博垃圾账号的行为">
+            <span class="h2" id="subtitle" title="使用Flink-分析微博spammer账号的行为">
               
             </span>
 
@@ -243,12 +243,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">使用Flink之分析微博垃圾账号的行为</h1>
+            <h1 style="display: none">使用Flink-分析微博spammer账号的行为</h1>
             
             <div class="markdown-body">
               <p>本项目针对MicroblogPCU数据集进行分析，采用Python为编程语言，采用mysql存储数据，采用flink对数据进行处理分析，并对结果进行数据可视化。</p>
-<p>Flink 是目前非常火热的流处理框架，可以很好地实现批流一体，即一套代码既可以用于批处理，也可以用于流处理。 Flink 在做批处理的时候，是将批数据当成特殊的流数据来处理。PyFlink 是 Flink 对 Java API 的一层封装，运行时会启动 JVM 来与 Python 进行通信。<br> PyFlink 提供了多种不同层级的 API，层级越高封装程度越高，层级由高到低分别为:SQL API、Table API、DataStream API / DataSet API、Stateful Streaming Processing，</p>
-<p>本实验在Table API 的基础上进行编程。</p>
+<p>Flink 是目前非常火热的流处理框架，可以很好地实现批流一体，即一套代码既可以用于批处理，也可以用于流处理。 Flink 在做批处理的时候，是将批数据当成特殊的流数据来处理。PyFlink 是 Flink 对 Java API 的一层封装，运行时会启动 JVM 来与 Python 进行通信。<br> PyFlink 提供了多种不同层级的 API，层级越高封装程度越高，层级由高到低分别为:SQL API、Table API、DataStream API / DataSet API、Stateful Streaming Processing，此次实验在Table API 的基础上进行编程。</p>
 <h2 id="实验环境搭建"><a href="#实验环境搭建" class="headerlink" title="实验环境搭建"></a>实验环境搭建</h2><ul>
 <li>系统: macos Big Sur 11.2.2</li>
 <li> Java : 11.0.10</li>
@@ -257,7 +256,7 @@
 </ul>
 <p>通过homebrew在本机安装apache-flink之后，运行文件夹下的start-cluster.sh启动flink集群模式（之后通过修改用户配置文件，用命令<code>start-flink</code>来替代这一步）</p>
 <p>用<code>flink run -m localhost:8081 -py weibo.py</code>运行python程序，并通过<code>localhost:8081</code>在web页面打开flink的dashboard，查看作业的运行情况。</p>
-<p><img src="/img/image-20210607203836096.png" srcset="/img/loading.gif" lazyload alt="image-20210607203836096"></p>
+<p><img src="/img/image-20210607203836096.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><p>MicroblogPCU是从新浪微博采集到的一个用于探索微博中的spammers（发送垃圾信息的人）的数据集，它可以被用于研究机器学习方法和社会关系研究。本文将利用这个数据集探究spammer的一些行为特征，并分析它们和正常社交账号的行为区别。</p>
 <h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>本次实验采用pandas库对数据进行预处理，读取csv文件后到Dataframe后，清洗各个属性和处理缺失值，取出微博用户的微博文本内容、发博时间，粉丝数、关注人数、发博数、等级这些属性进行处理分析。 </p>
 <h4 id="文件编码转化"><a href="#文件编码转化" class="headerlink" title="文件编码转化"></a>文件编码转化</h4><p>直接读取发现乱码，用macOS自带的iconv命令行工具将gb2312编码的数据源文件转为utf-8编码 <code> iconv -c -f gb2312 -t UTF-8 file &gt;&gt; new_file</code></p>
