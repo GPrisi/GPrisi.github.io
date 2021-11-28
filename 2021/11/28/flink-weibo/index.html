@@ -1,0 +1,528 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo1.png">
+  <link rel="icon" href="/img/logo1.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <meta name="description" content="本项目针对MicroblogPCU数据集进行分析，采用Python为编程语言，采用mysql存储数据，采用flink对数据进行处理分析，并对结果进行数据可视化。  Flink 是目前非常火热的流处理框架，可以很好地实现批流一体，即一套代码既可以用于批处理，也可以用于流处理。 Flink 在做批处理的时候，是将批数据当成特殊的流数据来处理。PyFlink 是 Flink 对 Java API 的一层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Flink之分析微博垃圾账号的行为">
+<meta property="og:url" content="http://example.com/2021/11/28/flink-weibo/index.html">
+<meta property="og:site_name" content="Priscilla&#39;s blog">
+<meta property="og:description" content="本项目针对MicroblogPCU数据集进行分析，采用Python为编程语言，采用mysql存储数据，采用flink对数据进行处理分析，并对结果进行数据可视化。  Flink 是目前非常火热的流处理框架，可以很好地实现批流一体，即一套代码既可以用于批处理，也可以用于流处理。 Flink 在做批处理的时候，是将批数据当成特殊的流数据来处理。PyFlink 是 Flink 对 Java API 的一层">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/11/28/flink-weibo/image-20210610205912269.png">
+<meta property="og:image" content="http://example.com/2021/11/28/flink-weibo/followee_num.jpg">
+<meta property="og:image" content="http://example.com/2021/11/28/flink-weibo/词云图-6.png">
+<meta property="article:published_time" content="2021-11-28T05:01:20.000Z">
+<meta property="article:modified_time" content="2021-11-28T05:06:22.981Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="flink">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2021/11/28/flink-weibo/image-20210610205912269.png">
+  
+  <title>使用Flink之分析微博垃圾账号的行为 - Priscilla&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Priscilla&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/mist.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="使用Flink之分析微博垃圾账号的行为">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-28 13:01" pubdate>
+        November 28, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      21 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用Flink之分析微博垃圾账号的行为</h1>
+            
+            <div class="markdown-body">
+              <p>本项目针对MicroblogPCU数据集进行分析，采用Python为编程语言，采用mysql存储数据，采用flink对数据进行处理分析，并对结果进行数据可视化。</p>
+<p> Flink 是目前非常火热的流处理框架，可以很好地实现批流一体，即一套代码既可以用于批处理，也可以用于流处理。 Flink 在做批处理的时候，是将批数据当成特殊的流数据来处理。PyFlink 是 Flink 对 Java API 的一层封装，运行时会启动 JVM 来与 Python 进行通信。<br> PyFlink 提供了多种不同层级的 API，层级越高封装程度越高，层级由高到低分别为:SQL API、Table API、DataStream API / DataSet API、Stateful Streaming Processing，</p>
+<p>本实验在Table API 的基础上进行编程。</p>
+<h2 id="实验环境搭建"><a href="#实验环境搭建" class="headerlink" title="实验环境搭建"></a>实验环境搭建</h2><ul>
+<li>系统: macos Big Sur 11.2.2</li>
+<li> Java : 11.0.10</li>
+<li>Python : 3.9.2 | packaged by conda-forge</li>
+<li>Flink : 1.12.2</li>
+</ul>
+<p>通过homebrew在本机安装apache-flink之后，运行文件夹下的start-cluster.sh启动flink集群模式（之后通过修改用户配置文件，用命令<code>start-flink</code>来替代这一步）</p>
+<p>用<code>flink run -m localhost:8081 -py weibo.py</code>运行python程序，并通过<code>localhost:8081</code>在web页面打开flink的dashboard，查看作业的运行情况。</p>
+<p>![image-20210607203836096](/Users/liushupin/Library/Application Support/typora-user-images/image-20210607203836096.png)</p>
+<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><p>MicroblogPCU是从新浪微博采集到的一个用于探索微博中的spammers（发送垃圾信息的人）的数据集，它可以被用于研究机器学习方法和社会关系研究。本文将利用这个数据集探究spammer的一些行为特征，并分析它们和正常社交账号的行为区别。</p>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>本次实验采用pandas库对数据进行预处理，读取csv文件后到Dataframe后，清洗各个属性和处理缺失值，取出微博用户的微博文本内容、发博时间，粉丝数、关注人数、发博数、等级这些属性进行处理分析。 </p>
+<h4 id="文件编码转化"><a href="#文件编码转化" class="headerlink" title="文件编码转化"></a>文件编码转化</h4><p>直接读取发现乱码，用macOS自带的iconv命令行工具将gb2312编码的数据源文件转为utf-8编码 <code> iconv -c -f gb2312 -t UTF-8 file &gt;&gt; new_file</code></p>
+<h4 id="查看csv数据"><a href="#查看csv数据" class="headerlink" title="查看csv数据"></a>查看csv数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">file_path=<span class="hljs-string">&#x27;weibo_user.csv&#x27;</span><br>df = pd.read_csv(file_path,encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>df.head()<br></code></pre></td></tr></table></figure>
+
+<h4 id="清洗用户message的文本内容"><a href="#清洗用户message的文本内容" class="headerlink" title="清洗用户message的文本内容"></a>清洗用户message的文本内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">clean_msg</span>(<span class="hljs-params">text</span>):</span><br>    text = re.sub(<span class="hljs-string">r&quot;(回复)?(//)?\s*@\S*?\s*(:| |$)&quot;</span>, <span class="hljs-string">&quot; &quot;</span>, text)  <span class="hljs-comment"># 去除正文中的@和回复/转发中的用户名</span><br>    text = re.sub(<span class="hljs-string">r&quot;\[\S+\]&quot;</span>, <span class="hljs-string">&quot;&quot;</span>, text)      <span class="hljs-comment"># 去除表情符号</span><br>    <span class="hljs-comment">#text = re.sub(r&quot;#\S+#&quot;, &quot;&quot;, text)       # 保留话题内容</span><br>    URL_REGEX = re.<span class="hljs-built_in">compile</span>(<br>        <span class="hljs-string">r&#x27;(?i)\b((?:https?://|www\d&#123;0,3&#125;[.]|[a-z.\-]+[.][a-z]&#123;2,4&#125;/)(?:[^\s()&lt;&gt;]+|\(([^\s()&lt;&gt;]+|(\([^\s()&lt;&gt;]+\)))*\))+(?:\(([^\s()&lt;&gt;]+|(\([^\s()&lt;&gt;]+\)))*\)|[^\s`!()\[\]&#123;&#125;;:\&#x27;&quot;.,&lt;&gt;?«»“”‘’]))&#x27;</span>,<br>        re.IGNORECASE) 											 <span class="hljs-comment"># 不保留数字</span><br>    text = re.sub(URL_REGEX, <span class="hljs-string">&quot;&quot;</span>, text)       <span class="hljs-comment"># 去除网址</span><br>    text = re.sub(<span class="hljs-string">r&quot;\s+&quot;</span>, <span class="hljs-string">&quot; &quot;</span>, text) 				 <span class="hljs-comment"># 合并正文中过多的空格</span><br>    <span class="hljs-keyword">return</span> text.strip()<br></code></pre></td></tr></table></figure>
+
+<h4 id="时间格式清洗"><a href="#时间格式清洗" class="headerlink" title="时间格式清洗"></a>时间格式清洗</h4><p>为了对spammer发博日期和时间分别做研究，把字符串中的日期和时间单独提取出来，并生成datetime类型；</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">str_to_date_wb</span>(<span class="hljs-params">date_str</span>):</span><br>    date = date_str.split(<span class="hljs-string">&#x27; &#x27;</span>)[<span class="hljs-number">0</span>]<br>    fmt = <span class="hljs-string">&#x27;%Y/%m/%d&#x27;</span><br>    time_tuple = time.strptime(date, fmt)<br>    year, month, day = time_tuple[:<span class="hljs-number">3</span>]<br>    <span class="hljs-keyword">return</span> datetime.date(year, month, day)<br><br>df[<span class="hljs-string">&#x27;date&#x27;</span>]=df[<span class="hljs-string">&#x27;post_time&#x27;</span>].<span class="hljs-built_in">map</span>(str_to_date_wb)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h3><ol>
+<li>查看数据是否具有重复值</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df.loc[df.followee_num.isnull(),<span class="hljs-string">&#x27;followee_num&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>查看各字段缺失率，缺失的位置用自定义的值填充</li>
+</ol>
+<ul>
+<li>例如，时间缺失值的处理：全部设置为1990/1/1 00:00</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df.loc[df[<span class="hljs-string">&#x27;post_time&#x27;</span>].isnull(),<span class="hljs-string">&#x27;post_time&#x27;</span>]=<span class="hljs-string">&#x27;1990/1/1 00:00&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>标签1表示是spammer，-1表示不是spammer，NAN数据用0填充。</li>
+</ul>
+<ol start="3">
+<li><p>选取要研究的属性，删除不研究的属性，保存到当前路径下的csv文件中，命名为“washnew.csv”。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">cols = [<span class="hljs-string">&#x27;user_id&#x27;</span>,<span class="hljs-string">&#x27;gender&#x27;</span>,<span class="hljs-string">&#x27;post_num&#x27;</span>,<span class="hljs-string">&#x27;message&#x27;</span>,<span class="hljs-string">&#x27;follower_num&#x27;</span>,<span class="hljs-string">&#x27;followee_num&#x27;</span>,<span class="hljs-string">&#x27;is_spammer&#x27;</span>]<br>df[cols].to_csv(<span class="hljs-string">&#x27;washednew.csv&#x27;</span>,header=<span class="hljs-literal">None</span>) <br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="PyFlink批处理"><a href="#PyFlink批处理" class="headerlink" title="PyFlink批处理"></a>PyFlink批处理</h2><ul>
+<li><p>首先，创建 Blink 批处理环境</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pyflink.table <span class="hljs-keyword">import</span> BatchTableEnvironment, EnvironmentSettings<br><span class="hljs-keyword">from</span> pyflink.table <span class="hljs-keyword">import</span> DataTypes<br><span class="hljs-keyword">from</span> pyflink.table.descriptors <span class="hljs-keyword">import</span> Schema, OldCsv, FileSystem<br><br>env_settings = EnvironmentSettings.new_instance().in_batch_mode().use_blink_planner().build()<br>t_env = BatchTableEnvironment.create(environment_settings=env_settings)<br></code></pre></td></tr></table></figure></li>
+<li><p>创建源表(source)，source 指数据源，这里使用同级目录下 weibo_user.csv清洗后的washednew.csv</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">dir_word = os.path.join(os.path.abspath(os.path.dirname(__file__)), <span class="hljs-string">&#x27;washednew.csv&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+<li><p>通过Table API 创建一张表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python">t_env.connect(FileSystem().path(dir_word)) \<br>    .with_format(OldCsv() \<br>                 .field(<span class="hljs-string">&#x27;id&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;user_id&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;gender&#x27;</span>, DataTypes.STRING()) \<br>                 .field(<span class="hljs-string">&#x27;post_num&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;follower_num&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;followee_num&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;is_spammer&#x27;</span>, DataTypes.FLOAT())) \<br>    .with_schema(Schema() \<br>                 .field(<span class="hljs-string">&#x27;id&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;user_id&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;gender&#x27;</span>, DataTypes.STRING()) \<br>                 .field(<span class="hljs-string">&#x27;post_num&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;follower_num&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;followee_num&#x27;</span>, DataTypes.BIGINT()) \<br>                 .field(<span class="hljs-string">&#x27;is_spammer&#x27;</span>, DataTypes.FLOAT())) \<br>    .create_temporary_table(<span class="hljs-string">&#x27;source&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h2><h4 id="正常用户和spammer的粉丝量级比较"><a href="#正常用户和spammer的粉丝量级比较" class="headerlink" title="正常用户和spammer的粉丝量级比较"></a>正常用户和spammer的粉丝量级比较</h4><p>用Table API从表中取出数据。</p>
+<p>以选择feature为“followee_num”为例，为了将粉丝数划分为’百’,’千’,’万’,’十万’,’百万’,’千万’的数量级，每次用条件选择和”count”从表中取出符合范围的数据，并利用group_by方法区分spammer和正常用户的两者数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">z1 = tb.where(col(feature)&lt;<span class="hljs-number">1000</span> ) \<br>         .group_by(col(<span class="hljs-string">&#x27;is_spammer&#x27;</span>)) \<br>         .select(<span class="hljs-string">&#x27;count(1) AS cnt&#x27;</span>).to_pandas() <br></code></pre></td></tr></table></figure>
+
+<p>可视化比较正常用户和spammer的粉丝量级，并输出图像到png文件。</p>
+<p>从图中可以看出，正常用户的粉丝数量从百级到千万级不等，并且千级以上的部分分布相对均匀，而spammer用户的粉丝量均在1000以下，说明spammer用户是很难积累粉丝量的。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">z = pd.concat([z1,z2,z3,z4,z5,z6],axis=<span class="hljs-number">1</span>,ignore_index=<span class="hljs-keyword">True</span>)<br>z.<span class="hljs-keyword">columns</span>=[<span class="hljs-string">&#x27;百&#x27;</span>,<span class="hljs-string">&#x27;千&#x27;</span>,<span class="hljs-string">&#x27;万&#x27;</span>,<span class="hljs-string">&#x27;十万&#x27;</span>,<span class="hljs-string">&#x27;百万&#x27;</span>,<span class="hljs-string">&#x27;千万&#x27;</span>]<br>z.<span class="hljs-keyword">index</span>=[<span class="hljs-string">&#x27;normal&#x27;</span>,<span class="hljs-string">&#x27;spammer&#x27;</span>]<br><br>z.plot(kind=<span class="hljs-string">&#x27;bar&#x27;</span>, <span class="hljs-keyword">stacked</span>=<span class="hljs-keyword">True</span>, alpha= <span class="hljs-number">0.7</span>)<br>plt.legend()<br>plt.title(<span class="hljs-string">&#x27;正常用户和spammer的粉丝量级比较&#x27;</span>)<br>plt.savefig(feature+<span class="hljs-string">&#x27;.png&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<img src="image-20210610205912269.png" srcset="/img/loading.gif" lazyload alt="image-20210610205912269" style="zoom: 50%;" />
+
+
+
+<h4 id="正常用户和spammer用户的关注人数比较"><a href="#正常用户和spammer用户的关注人数比较" class="headerlink" title="正常用户和spammer用户的关注人数比较"></a>正常用户和spammer用户的关注人数比较</h4><p>关注人数指该发文账户关注其他人的数量。首先查看数据大致情况，发现样本中的关注人数以“0～100”、“100～1000”以及“&gt;1000”划分是比较好的。为了直观显示各人数段的比例，采用饼图来绘制我们的数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python">fig,axes=plt.subplots(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<span class="hljs-comment">#创建画布</span><br><br>labels= z.columns<br>sizes_m=z.loc[[<span class="hljs-string">&#x27;normal&#x27;</span>]].values.squeeze() <span class="hljs-comment">#normal对应的数值</span><br>sizes_f=z.loc[[<span class="hljs-string">&#x27;spammer&#x27;</span>]].values.squeeze()  <span class="hljs-comment">#spammer对应的数值</span><br>colors=[<span class="hljs-string">&#x27;green&#x27;</span>,<span class="hljs-string">&#x27;yellow&#x27;</span>,<span class="hljs-string">&#x27;orange&#x27;</span>]<span class="hljs-comment">#每块对应的颜色</span><br>explode=(<span class="hljs-number">0.05</span>,<span class="hljs-number">0.05</span>,<span class="hljs-number">0.05</span>)<span class="hljs-comment">#将每一块分割出来，值越大分割出的间隙越大</span><br><br>axes[<span class="hljs-number">0</span>].pie(sizes_m,<br>        colors=colors,<br>        labels=labels,<br>        explode=explode,<br>        autopct=<span class="hljs-string">&#x27;%.2f%%&#x27;</span>,<span class="hljs-comment">#数值设置为保留固定小数位的百分数</span><br>        shadow=<span class="hljs-literal">False</span>,<span class="hljs-comment">#无阴影设置</span><br>        startangle=<span class="hljs-number">90</span>,<span class="hljs-comment">#逆时针起始角度设置</span><br>        pctdistance=<span class="hljs-number">0.5</span>,<span class="hljs-comment">#数值距圆心半径背书距离</span><br>        labeldistance =<span class="hljs-number">1.05</span><span class="hljs-comment">#图例距圆心半径倍距离</span><br>       )<br>axes[<span class="hljs-number">0</span>].axis(<span class="hljs-string">&#x27;equal&#x27;</span>)<span class="hljs-comment">#x,y轴刻度一致，保证饼图为圆形</span><br>axes[<span class="hljs-number">0</span>].legend(loc=<span class="hljs-string">&#x27;best&#x27;</span>)<br>axes[<span class="hljs-number">0</span>].set_title(<span class="hljs-string">&#x27;正常用户关注数饼图&#x27;</span>)<br><br>axes[<span class="hljs-number">1</span>].pie(sizes_f,<br>        colors=colors,<br>        labels=labels,<br>        explode=explode,<br>        autopct=<span class="hljs-string">&#x27;%.2f%%&#x27;</span>,<br>        shadow=<span class="hljs-literal">False</span>,<br>        startangle=<span class="hljs-number">90</span>,<br>        pctdistance=<span class="hljs-number">0.5</span>,<br>        labeldistance =<span class="hljs-number">1.05</span><br>       )<br>axes[<span class="hljs-number">1</span>].axis(<span class="hljs-string">&#x27;equal&#x27;</span>)<br>axes[<span class="hljs-number">1</span>].set_title(<span class="hljs-string">&#x27;spammer用户关注数饼图&#x27;</span>)<br>axes[<span class="hljs-number">1</span>].legend(loc=<span class="hljs-string">&#x27;best&#x27;</span>)<br><br>fig.savefig(<span class="hljs-string">&#x27;followee_num.jpg&#x27;</span>,dpi=<span class="hljs-number">200</span>)<br></code></pre></td></tr></table></figure>
+
+<p>从图中可以看出正常用户的关注数大多集中在100～1000，也就是几百人的关注量，约1/4关注人数在100人以内，小部分超过了1000人；而spammer账户有几乎一半的比例关注人数在1000以上，100～1000的部分的数量也达到了47.79%，极少数关注人数在100人以内。说明spammer账户倾向于通过大量关注其他微博来完成传播垃圾信息的目的。</p>
+<img src="followee_num.jpg" srcset="/img/loading.gif" lazyload alt="followee_num" style="zoom:80%;" />
+
+
+
+<h3 id="生成词云图"><a href="#生成词云图" class="headerlink" title="生成词云图"></a>生成词云图</h3><blockquote>
+<p> 词云图是一种用来展现高频关键词的可视化表达，通过文字、色彩、图形的搭配，产生有冲击力地视觉效果，而且能够传达有价值的信息。词云就是通过形成“关键词云层”或“关键词渲染”，对网络文本中出现频率较高的“关键词”的视觉上的突出。</p>
+</blockquote>
+<p>本实验用词云图来处理spammer个人主页的“message”，从而直观地展示spammer账户涉及到的高频关些词，这些关键词能够体现spammer账户关注的话题领域以及传播垃圾信息的目的。</p>
+<h4 id="安装相应的库包和python模块"><a href="#安装相应的库包和python模块" class="headerlink" title="安装相应的库包和python模块"></a>安装相应的库包和python模块</h4><p>安装phantomjs和pyecharts，用到了python的jieba分词模块和wordcloud词云绘制模块。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">fc=<span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> text <span class="hljs-keyword">in</span> spm_msg:<br>    clean_msg(text) 	<span class="hljs-comment">#清洗文本中的特殊字符、无意义字符和连续空格等</span><br>    txt +=text<br>words=jieba.lcut(fc)	<span class="hljs-comment">#分词</span><br>article=<span class="hljs-string">&#x27; &#x27;</span>.join(words)<br><br>c = wordcloud.WordCloud( \<br>    width = <span class="hljs-number">1000</span>, height = <span class="hljs-number">700</span>, \ <br>    background_color = <span class="hljs-string">&quot;white&quot;</span>, \<br>    font_path = <span class="hljs-string">&quot;drive/MyDrive/STHeiti Medium.ttc&quot;</span>    <br>    )<br>c.generate(article)<br><br>c.to_file(<span class="hljs-string">&#x27;词云图.png&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>探索spammers发送的message大致内容，从图中可以看出，spammers个人主页消息的一些关键词包括“微信”、“旅游”、“代理”、“时尚“等等。</p>
+<img src="词云图-6.png" srcset="/img/loading.gif" lazyload alt="词云图-6" style="zoom:75%;" />
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/flink/">flink</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/11/10/test-music/">
+                        <span class="hidden-mobile">test music</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Prscilla</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Cigarettes</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
