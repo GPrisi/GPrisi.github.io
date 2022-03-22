@@ -167,6 +167,31 @@
   
   
   <entry>
+    <title>算法设计过程</title>
+    <link href="/2021/02/15/algo-design/"/>
+    <url>/2021/02/15/algo-design/</url>
+    
+    <content type="html"><![CDATA[<h2 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h2><p>对于大部分问题，算法设计过程可以概括为以下几个重要步骤:</p><ul><li>用精确的数学公式来表述问题；<ul><li>问题陈述中的细微变化，可能会对问题本身的复杂度造成巨大影响。</li></ul></li><li>设计求解该问题的算法；<ul><li>识别问题属于哪种类型，根据问题本身的内在结构设计适合的算法；</li><li>一旦有了一个有效的算法来解决问题，要进一步提高运行时间，通常可以通过仔细考虑实现细节，有时候是使用更复杂的数据结构。</li></ul></li><li>对算法进行分析，证明算法的正确性，给出算法运行时间的界限，从而确定算法的效率。</li></ul><p>设计一个算法的目标应当是：</p><blockquote><p>寻找<strong>比暴力搜索有所改进</strong>的算法，<strong>多项式时间可解性</strong>作为量化标准。</p></blockquote><p>算法相对暴力搜索在性能上大幅改进，说明它包含有价值的<strong>启发式思想</strong>；大多数问题都有一个自然的“搜索空间”——所有可能的解决方案的集合。它告诉了我们一些关于<strong>问题本身的内在结构</strong>和<strong>计算可行性</strong>的信息。</p><ul><li>当问题规模不断增长时，算法的扩展情况是好是坏？<br>通常有这样的情况：两种非常不同的算法，当它们在大小为100的输入上表现差不多，然而如果将输入大小乘以十倍，其中一个仍然运行得很快，而另一个则消耗大量时间。</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>写点东西</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>algorithm</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>love, new year</title>
     <link href="/2021/01/01/love-new-year/"/>
     <url>/2021/01/01/love-new-year/</url>
