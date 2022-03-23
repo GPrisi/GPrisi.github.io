@@ -100,7 +100,7 @@
     <link href="/2021/10/05/app/"/>
     <url>/2021/10/05/app/</url>
     
-    <content type="html"><![CDATA[<h2 id="知识管理"><a href="#知识管理" class="headerlink" title="知识管理"></a>知识管理</h2><ul><li>Obsidian: 一款开源笔记工具, 提供反向链接和自动知识图谱生成，免费！<br>因为Obsidian以markdown的形式本地化存储笔记，需要自己备份：可以安装插件Obsidian Git，定时同步到Github仓库。</li><li>Zotero: <ul><li><p>下载论文<br>（安装safari-zotero插件后）arxiv等网页上可以自动抓取</p></li><li><p>论文存储和分类</p><pre><code>- 自定义分类整理- 高级检索 #toexplr- 标记阅读状态 #toexplr - 排序按日期、显示会议 </code></pre></li><li><p>个人论文写作</p><pre><code>- 插入参考文献- 调整参考文献格式</code></pre></li><li><p>安装zotero插件<br>把 <code>.xpi</code> 文件下载到本地，然后在 Zotero中点选 “Tools → Add-Ons”, 把 <code>.xpi</code> 文件拖进窗口。</p></li></ul></li></ul><hr><h2 id="编程"><a href="#编程" class="headerlink" title="编程"></a>编程</h2><ul><li><a href="%5Bhttps://gist.github.com/%5D(https://gist.github.com/)">Gist</a>：代码片段收集和管理，可以与其他人共享代码片段<ul><li>每个Gist都是一个Git库，有版本历史，可以被fork/clone</li><li> Gist分为公开的和私有的，私有的Gist不会在Gist主页显示，也无法用搜索引擎搜索到，但它的链接是开放访问的</li></ul></li><li>VScode </li></ul><hr><h2 id="效率工具"><a href="#效率工具" class="headerlink" title="效率工具"></a>效率工具</h2><ul><li>Alfred（macOS系统）：双击command键可以进行输入。<br>常用的功能：<ul><li>快速打开某个App：输入app的前面几个字母，就能直接打开</li><li>web Search：直接在搜索框输入想搜索的内容，选择搜索引擎（或默认谷歌）就可以打开浏览器并出现搜索结果；</li><li>自定义网站搜索（用的最多）：可以快速打开自己常用的网站并在站内进行搜索；以查找论文和代码的<a href="https://paperswithcode.com/">PapersWithCode</a>网站为例:<br>可以在原网站查看url地址的格式，用<code>&#123;query&#125;</code>替换自己要搜索的内容，例如paperswithcode网站的url设置如下：<br><img src="/img/alfred1.png"><br>另外还可以自定义图标，在查找的时候更明显和美观。<br><img src="/img/alfred2.png"><br>效果如下，在双击command键弹出来的alfred搜索框里可以直接输入paper(自定义)+想要的找的论文：<br><img src="/img/alfred3.png"></li></ul></li></ul>]]></content>
+    <content type="html"><![CDATA[<h2 id="知识管理"><a href="#知识管理" class="headerlink" title="知识管理"></a>知识管理</h2><ul><li>Obsidian，一款开源笔记工具，提供反向链接和自动知识图谱生成，市面上有很多类似的软件，个人感觉这款功能齐全、UI不错，并且它免费！<br>备份问题：因为Obsidian以markdown的形式本地化存储笔记，需要自己备份：可以安装插件Obsidian Git，定时同步到Github仓库。</li><li>Zotero，文献管理软件，以下是我常用到的场景: <ul><li><p>下载论文<br>（安装safari-zotero插件后）arxiv等网页上可以自动抓取</p></li><li><p>论文存储和分类</p><ul><li>自定义分类整理</li><li>高级检索 </li><li>标记阅读状态 </li><li>排序按日期、显示会议 </li></ul></li><li><p>个人论文写作</p><ul><li>插入参考文献</li><li>调整参考文献格式</li></ul></li><li><p>安装zotero插件<br>把 <code>.xpi</code> 文件下载到本地，然后在 Zotero中点选 “Tools → Add-Ons”, 把 <code>.xpi</code> 文件拖进窗口。</p></li></ul></li></ul><hr><h2 id="编程"><a href="#编程" class="headerlink" title="编程"></a>编程</h2><ul><li><a href="%5Bhttps://gist.github.com/%5D(https://gist.github.com/)">Gist</a>：代码片段收集和管理，可以与其他人共享代码片段<ul><li>每个Gist都是一个Git库，有版本历史，可以被fork/clone</li><li> Gist分为公开的和私有的，私有的Gist不会在Gist主页显示，也无法用搜索引擎搜索到，但它的链接是开放访问的</li></ul></li><li>VScode </li></ul><hr><h2 id="效率工具"><a href="#效率工具" class="headerlink" title="效率工具"></a>效率工具</h2><ul><li>Alfred（macOS系统）：可以定制你想要的任意工作流程，使一些需要很多步骤的复杂工作变成简单的自动化流程，大大提高你的学习工作效率；双击command键就可以打开Alfred搜索框进行输入。<br>常用的功能：<ul><li>快速打开某个App：输入app的前面几个字母，就能直接打开</li><li>web Search：直接在搜索框输入想搜索的内容，选择搜索引擎（或默认谷歌）就可以打开浏览器并出现搜索结果；</li><li>自定义网站搜索（用的最多）：可以快速打开自己常用的网站并在站内进行搜索；以查找论文和代码的<a href="https://paperswithcode.com/">PapersWithCode</a>网站为例:<br>可以在原网站查看url地址的格式，用<code>&#123;query&#125;</code>替换自己要搜索的内容，例如paperswithcode网站的url设置如下：<br><img src="/img/alfred1.png"></li></ul></li></ul><p>另外还可以自定义图标，在查找的时候更明显和美观。<br><img src="/img/alfred2.png"></p><p>效果如下，在双击command键弹出来的alfred搜索框里可以直接输入paper(自定义)+想要的找的论文：<br><img src="/img/alfred3.png"></p>]]></content>
     
     
     <categories>
@@ -112,7 +112,7 @@
     
     <tags>
       
-      <tag>效率</tag>
+      <tag>待更</tag>
       
     </tags>
     
@@ -142,25 +142,6 @@
       <tag>爬虫</tag>
       
     </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>为Github.io博客安装好看的主题</title>
-    <link href="/2021/07/06/hexo-blog/"/>
-    <url>/2021/07/06/hexo-blog/</url>
-    
-    <content type="html"><![CDATA[<h1 id="安装环境配置"><a href="#安装环境配置" class="headerlink" title="安装环境配置"></a>安装环境配置</h1><p>（前提：macOS下配置了Git， 安装了Node.js）</p><p>安装 <code>hexo-deployer-git</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install --save hexo-deployer-git<br></code></pre></td></tr></table></figure><h1 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h1><p><a href="https://fluid-dev.github.io/hexo-fluid-docs/start/#%E4%B8%BB%E9%A2%98%E7%AE%80%E4%BB%8B">https://fluid-dev.github.io/hexo-fluid-docs/start/#主题简介</a></p><h1 id="应用主题"><a href="#应用主题" class="headerlink" title="应用主题"></a>应用主题</h1><p>两种方案：</p><ul><li>直接用 theme/fluid/ 下面的 _config.fluid.yml （配置文件）里的内容替换根目录里的配置文件</li><li>在根目录里的配置文件中引用 fluid 配置文件:<br><code>theme: fluid</code></li></ul><h1 id="修改主页内容"><a href="#修改主页内容" class="headerlink" title="修改主页内容"></a>修改主页内容</h1><p>一些网页名称、主页banners标题、背景图片等等，都在配置文件里面修改</p><h1 id="生成和部署"><a href="#生成和部署" class="headerlink" title="生成和部署"></a>生成和部署</h1><ul><li><code>hexo g</code> 是编译生成，比如你往 _post/ 里加入一个 md 文件页面，执行该命令就会自动生成代码整合到 public/ 下面的 html 文件中去</li><li><code>hexo d</code> 是部署，相当于 git 的 add + commit + push，会把 hexo 文件夹里的 public 文件夹的内容（它里面包含了构成一个静态网页的全部内容和数据）上传到 github</li></ul><h1 id="安装音乐插件"><a href="#安装音乐插件" class="headerlink" title="安装音乐插件"></a>安装音乐插件</h1><p>参考<a href="https://easyhexo.com/3-Plugins-use-and-config/3-1-hexo-tag-aplayer/#%E4%BB%8B%E7%BB%8D">easy hexo关于hexo-tag-aplayer插件的安装指南</a></p><ul><li><p>Aplayer —— HTML5 music player，<a href="https://aplayer.js.org/#/zh-Hans/">中文文档</a><br>  使用 npm 安装：</p>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install aplayer --save<br></code></pre></td></tr></table></figure></li><li><p>Meting（可以连接到国内网易云音乐、QQ 音乐等音乐媒体平台）<br>  只需要去音乐页面获取ID就可以调用歌曲：<br>![[Pasted image 20211110195040.png]]</p></li></ul><p>⚠️除了上面提出的内容之外，因为之前另外安装了主题Fluid，需要在主题配置文件 theme/fluid/_config.yml 中 custom 下引入插件依赖的js和css:</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">custom_js:</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js</span> <span class="hljs-comment">#/APlayer#/APlayer依赖</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">//cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js</span> <span class="hljs-comment">#/APlayer依赖</span><br></code></pre></td></tr></table></figure><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">custom_css:</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css</span> <span class="hljs-comment">#/APlayer依赖</span><br></code></pre></td></tr></table></figure><h3 id="创建新文章"><a href="#创建新文章" class="headerlink" title="创建新文章"></a>创建新文章</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new [name]<br></code></pre></td></tr></table></figure><p>就会在 <code>_post/</code> 里加入一个 md 文件</p><h3 id="文章内容图片"><a href="#文章内容图片" class="headerlink" title="文章内容图片"></a>文章内容图片</h3><p>本地图片存放位置</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">![](/img/example.jpg)<br></code></pre></td></tr></table></figure>]]></content>
-    
-    
-    <categories>
-      
-      <category>做点事情</category>
-      
-    </categories>
-    
     
   </entry>
   
@@ -236,6 +217,25 @@
       <tag>AI</tag>
       
     </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>为Github.io博客安装好看的主题</title>
+    <link href="/2020/11/06/hexo-blog/"/>
+    <url>/2020/11/06/hexo-blog/</url>
+    
+    <content type="html"><![CDATA[<h1 id="安装环境配置"><a href="#安装环境配置" class="headerlink" title="安装环境配置"></a>安装环境配置</h1><p>（前提：macOS下配置了Git， 安装了Node.js）</p><p>安装 <code>hexo-deployer-git</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install --save hexo-deployer-git<br></code></pre></td></tr></table></figure><h1 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h1><p><a href="https://fluid-dev.github.io/hexo-fluid-docs/start/#%E4%B8%BB%E9%A2%98%E7%AE%80%E4%BB%8B">https://fluid-dev.github.io/hexo-fluid-docs/start/#主题简介</a></p><h1 id="应用主题"><a href="#应用主题" class="headerlink" title="应用主题"></a>应用主题</h1><p>两种方案：</p><ul><li>直接用 theme/fluid/ 下面的 _config.fluid.yml （配置文件）里的内容替换根目录里的配置文件</li><li>在根目录里的配置文件中引用 fluid 配置文件:<br><code>theme: fluid</code></li></ul><h1 id="修改主页内容"><a href="#修改主页内容" class="headerlink" title="修改主页内容"></a>修改主页内容</h1><p>一些网页名称、主页banners标题、背景图片等等，都在配置文件里面修改</p><h1 id="生成和部署"><a href="#生成和部署" class="headerlink" title="生成和部署"></a>生成和部署</h1><ul><li><code>hexo g</code> 是编译生成，比如你往 _post/ 里加入一个 md 文件页面，执行该命令就会自动生成代码整合到 public/ 下面的 html 文件中去</li><li><code>hexo d</code> 是部署，相当于 git 的 add + commit + push，会把 hexo 文件夹里的 public 文件夹的内容（它里面包含了构成一个静态网页的全部内容和数据）上传到 github</li></ul><h1 id="安装音乐插件"><a href="#安装音乐插件" class="headerlink" title="安装音乐插件"></a>安装音乐插件</h1><p>参考<a href="https://easyhexo.com/3-Plugins-use-and-config/3-1-hexo-tag-aplayer/#%E4%BB%8B%E7%BB%8D">easy hexo关于hexo-tag-aplayer插件的安装指南</a></p><ul><li><p>Aplayer —— HTML5 music player，<a href="https://aplayer.js.org/#/zh-Hans/">中文文档</a><br>  使用 npm 安装：</p>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install aplayer --save<br></code></pre></td></tr></table></figure></li><li><p>Meting（可以连接到国内网易云音乐、QQ 音乐等音乐媒体平台）<br>  只需要去音乐页面获取ID就可以调用歌曲：<br>![[Pasted image 20211110195040.png]]</p></li></ul><p>⚠️除了上面提出的内容之外，因为之前另外安装了主题Fluid，需要在主题配置文件 theme/fluid/_config.yml 中 custom 下引入插件依赖的js和css:</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">custom_js:</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js</span> <span class="hljs-comment">#/APlayer#/APlayer依赖</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">//cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js</span> <span class="hljs-comment">#/APlayer依赖</span><br></code></pre></td></tr></table></figure><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">custom_css:</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css</span> <span class="hljs-comment">#/APlayer依赖</span><br></code></pre></td></tr></table></figure><h3 id="创建新文章"><a href="#创建新文章" class="headerlink" title="创建新文章"></a>创建新文章</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new [name]<br></code></pre></td></tr></table></figure><p>就会在 <code>_post/</code> 里加入一个 md 文件</p><h3 id="文章内容图片"><a href="#文章内容图片" class="headerlink" title="文章内容图片"></a>文章内容图片</h3><p>本地图片存放位置</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">![](/img/example.jpg)<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>做点事情</category>
+      
+    </categories>
+    
     
   </entry>
   
